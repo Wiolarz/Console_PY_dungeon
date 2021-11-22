@@ -28,8 +28,12 @@ shop_items_amount = 15
 
 week = 7
 
+world = None
 
+import terrain
 
+def generate_world():
+    world = terrain.earth
 
 
 

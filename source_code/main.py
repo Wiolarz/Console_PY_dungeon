@@ -1,7 +1,7 @@
 import terrain
 import units
 import economy
-
+import balance
 '''
 
 ArrayList<item> item_list = economy.generate_items(days);
@@ -60,13 +60,15 @@ while (choice != 9)
 '''
 
 
+
 def gameplay_loop(heroes):
-    world = terrain.earth()
-    world.first_quest.print_info()
+    balance.generate_world()
 
-    heroes.append(units.create_mercenary(world.days))
+    balance.world.main_quest.print_info()
 
-    print(world.days)
+    heroes.append(units.create_mercenary(balance.world.days))
+
+    print(balance.world.days)
     print(heroes)
 
     choice = 0

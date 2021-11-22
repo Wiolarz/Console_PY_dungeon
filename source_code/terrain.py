@@ -4,7 +4,7 @@ class earth:
     def __init__(self):
         self.days = 1
 
-        self.first_quest = jobs.quest()
+        self.main_quest = jobs.quest()
 
 
         # location_number = 7; // max 8

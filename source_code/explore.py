@@ -2,6 +2,7 @@ import random
 
 import balance
 import units
+import jobs
 
 def walk(company, place):
     # takes
@@ -25,7 +26,7 @@ def walk(company, place):
             
                 print("You won")
                 print(" quest: ")
-                balance.world.main_quest = quest(day)
+                balance.world.main_quest = jobs.quest()
                 balance.world.main_quest.days_to_complete+= 1
             
         
@@ -35,13 +36,9 @@ def walk(company, place):
             if balance.world.main_quest.units.monsters_to_kill <= 0:
                 print("You won")
                 print(" quest: ")
-                balance.world.main_quest = quest(day)
+                balance.world.main_quest = jobs.quest()
                 balance.world.main_quest.days_to_complete += 1
             
-        
-
-    
-
 
 # walking functions
 
@@ -144,16 +141,14 @@ def turn_attacks(attacker, defender):
             if success > 0:
                 fighter.effect(defender[target].turn_pool, action)
 
-############# TUUUUUUUUUUUU
+
 
 
 def fight(company, enemy):
-
     # measure the challenge level
     challenge = 0
     for fighter in enemy:
         challenge += fighter.level
-
 
     #enemy.get(0).printing_all_stats()
 
@@ -170,7 +165,7 @@ def fight(company, enemy):
         elif choice == 2:
             # player attacks
             # random targets for now
-            turn_attacks_hero(company, enemy)
+            turn_attacks(company, enemy)
 
             # checking dead enemy
             if graveyard(enemy):
@@ -178,53 +173,36 @@ def fight(company, enemy):
                 company.get(0).experience(challenge)
                 return True
 
-        turn_attacks_units.monster(enemy, company)
+        turn_attacks(enemy, company)
 
         # checking dead in company
         if graveyard(company):
             print("Your company has been defeated GAME OVER")
-            System.exit(666)
-
-
+            exit(666)
 
     return False # a draw
 
 
 
-def walking(company,  world,day)
+def walking(company, world, day):
+    print("1 Exit", end="  ")
+    x = 2
+    for place in world:
 
-   choice
+        print(x + " " + place.short_print(), end="  ")
+        x+= 1
+    print()
+    choice = int(input())  # User input
 
-    while (true)
-    
-        output.print("1 Exit  ")
-       x = 2
-        for (location place : world)
-        
-            output.print(x + " " + place.short_print() + "  ")
-            x+= 1
-        
-        print("")
+    if choice > 1:  # enter location
+        walk(company, world.get(choice - 2), day)
+        return True
 
-        choice = int(input())  # User input
-
-        if (choice == 1) return false # exit world map
-        elif (choice > 1) # enter location
-        
-            walk(company, world.get(choice - 2), day)
-            return true
-        
+    return False  # exit world map
     
 
 
 
 
-def  generate_world()
 
-     world =  ()
-    for (place = 1 place < balance.location_number+1 place+= 1)
-    
-        world.append( location(place)) # location level
-    
-    return world
     

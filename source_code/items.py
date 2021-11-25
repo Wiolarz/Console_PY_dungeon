@@ -64,9 +64,9 @@ class item():
         self.magic_pool = []
 
         # we are appending randomly sized dices to the pool in a number equal to "power" of the item
-        scope = balance.dices.length
-        weak_dices =   (scope / 4)
-        normal_dices = (scope / 2)
+        scope = len(balance.dices)
+        weak_dices =   (scope // 4)
+        normal_dices = (scope // 2)
         # strong_dices =
 
         for i in range(self.STR_req):
@@ -104,13 +104,13 @@ class item():
         self.magic_pool = []
 
         # we are appending randomly sized dices to the pool in a number equal to "power" of the item
-        scope = balance.dices.length
-        weak_dices = (scope / 4)
-        normal_dices = (scope / 2)
+        scope = len(balance.dices)
+        weak_dices = (scope // 4)
+        normal_dices = (scope // 2)
         # strong_dices =
 
         for i in range(self.STR_req):
-            self.base_pool.append(balance.dices[random.randint(0, (scope - 3)) + 3])  # magic number no sadge
+            self.base_pool.append(balance.dices[random.randint(0, (scope - 3)) + 3])  # magic number
 
         for i in range(self.AG_req):
             self.base_pool.append(balance.dices[random.randint(0, weak_dices)])

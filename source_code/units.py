@@ -130,7 +130,7 @@ def create_mercenary(power):
     rouge = {2, 3, 1}
     mage = {1, 2, 3}
     roles = {knight, rouge, mage}
-    role = roles[random.randint(0, len(roles))]
+    role = roles[random.randint(1, len(roles))-1]
 
     if power < 1:
         power = 1
@@ -164,10 +164,10 @@ class hero(unit):
         self.AG = role[1]
         self.INT = role[2]
 
-        artefact = items.item(1)
+        self.artefact = items.item(1)
 
 
-        artefact.set_stats(self.STR, self.AG, self.INT)
+        self.artefact.set_stats(self.STR, self.AG, self.INT)
 
 
         self.item_change()

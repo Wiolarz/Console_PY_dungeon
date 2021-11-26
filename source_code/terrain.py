@@ -8,22 +8,21 @@ from economy import roman_numbers
 class Earth:
     def __init__(self):
         self.days = 1
-
-        self.main_quest = jobs.Quest()
-
+        self.main_quest = None
+        self.amount_location = 7  # max 8
         self.locations = []
         self.generate_location()
         #
 
         # location_names
-        self.location_number = 7  # max 8
+
 
     def new_quest(self):
         self.main_quest = jobs.Quest()
 
     def generate_location(self):
-        for place in range(self.location_number):
-            self.locations.append(Location(place + 1, self.location_number))  # location level, overall location number
+        for place in range(self.amount_location):
+            self.locations.append(Location(place + 1, self.amount_location))  # location level, overall location number
 
 
 class Location:
@@ -61,7 +60,7 @@ class Location:
         cheking_wrong_balance = 0
         while not new_unique:
             cheking_wrong_balance += 1
-            if cheking_wrong_balance > self.amount_location * 5:
+            if cheking_wrong_balance > balance.world.amount_location * 5:
                 print("Error: cannot create random new location name")
                 exit(343)
             new_name = prefix[random.randint(0, len(prefix)-1)] + " " + core[random.randint(0, len(core)-1)]

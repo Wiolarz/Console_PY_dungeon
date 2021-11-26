@@ -1,11 +1,12 @@
 import terrain
 
-global world
+world = terrain.Earth
 
 
 def generate_world():
     global world
-    world = terrain.Earth
+    world = terrain.Earth()
+    world.new_quest()
 
 
 # set of dices used in a game, its number should not be smaller than 1

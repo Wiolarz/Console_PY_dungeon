@@ -44,13 +44,13 @@ class Quest:
 
         for level in difficulty:
             if current_day < level[0]:
-                location = random.randint(0, (balance.world.location_number / level[2]))
+                location = random.randint(0, (balance.world.amount_location / level[2]))
 
                 time = level[1]
                 return location, time, level[0]
 
         time = 1
-        location = balance.world.location_number-1  # last spot
+        location = balance.world.amount_location - 1  # last spot
         self.days_to_complete = time
         return location, base * balance.powerful
 

@@ -50,10 +50,10 @@ week = 7
             {
                 if (dice % i == 0)
                 {
-                    groups.get(i-1).add(dice)
+                    groups[i-1].add(dice)
                 }
             }
-            System.out.println(groups.get(i-1))
+            System.out.println(groups[i-1])
         }
         ArrayList<Integer> existing = new ArrayList<>()
         ArrayList<ArrayList<Integer>> fin = new ArrayList<>(groups.size()-1)
@@ -66,7 +66,7 @@ week = 7
         {
 
 
-            for (int dice : groups.get(i-1))
+            for (int dice : groups[i-1])
             {
                 boolean  existed = false
                 for (int d : existing)
@@ -74,16 +74,16 @@ week = 7
                     if (dice == d) existed = true
                 }
 
-                if (!existed) fin.get(i-1).add(dice)
+                if (!existed) fin[i-1].add(dice)
             }
 
 
-            for (int dice : groups.get(i-1))
+            for (int dice : groups[i-1])
             {
                 existing.add(dice)
             }
 
-            System.out.println(fin.get(i-1))
+            System.out.println(fin[i-1])
         }
         System.out.println(fin)
 

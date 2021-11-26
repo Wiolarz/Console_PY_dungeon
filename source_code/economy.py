@@ -76,9 +76,9 @@ def open_folder(player,  folder):
         if choice == 1:
             return
 
-        elif choice > 1 and folder.get(choice - 2).does_fit(player):
-            if player.pay(folder.get(choice - 2).level * balance.medium):
-                player.item_change(folder.get(choice - 2))
+        elif choice > 1 and folder[choice - 2].does_fit(player):
+            if player.pay(folder[choice - 2].level * balance.medium):
+                player.item_change(folder[choice - 2])
 
 
 def shop(player, item_list):

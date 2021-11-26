@@ -169,7 +169,7 @@ class Hero(Unit):
     def experience(self, value):
         self.exp += value * balance.weak
         while self.exp > (self.level * balance.levelup_speed):
-            if (self.STR+self.AG+self.INT) == (balance.dices.length * 3):
+            if (self.STR+self.AG+self.INT) == (len(balance.dices) * 3):
                 self.stat_changed()
                 return None  # max level
 

@@ -45,7 +45,7 @@ class Effect:
                 # effect
                 idx = 0
                 dices_idx = 0
-                max = dices.get(0)
+                max = dices[0]
                 
                 for dice_val in dices:
                     if max < dice_val:
@@ -53,7 +53,7 @@ class Effect:
                         dices_idx = idx
                     idx += 1
 
-                dices.set(dices_idx, self.dice_change(dices.get(dices_idx), -self.power))
+                dices[dices_idx] = self.dice_change(dices[dices_idx], -self.power)
             except:
                 print("Cannot work with dice pool smaller than 2")
 
@@ -63,7 +63,7 @@ class Effect:
             try:
                 # effect
                 target = random.randint(0, (len(dices)-1))
-                dices.set(target, self.dice_change(dices.get(target), -self.power))
+                dices[target] = self.dice_change(dices[target], -self.power)
             except:
                 print("cannot work with dice pool smaller than 2")
 

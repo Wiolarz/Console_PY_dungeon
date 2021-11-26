@@ -108,7 +108,7 @@ def attack(dice_pool):
 
 
 def graveyard(fighters):
-    for index in range(len(fighters) - 1, 0, -1):
+    for index in range(len(fighters) - 1, -1, -1):
         if fighters[index].HP <= 0:
             fighters.pop(index)
 
@@ -144,13 +144,13 @@ def fight(heroes, enemy):
     for fighter in enemy:
         challenge += fighter.level
 
-    # enemy.get(0).printing_all_stats()
+    # enemy[0].printing_all_stats()
 
     # fighting
 
     for rounds in range(50):
         choice = int(input())
-
+        print("test")
         if choice == 1:  # escape attempt
             # basic roll for each fighter, if player side succeeds
             # if success return false
@@ -164,7 +164,7 @@ def fight(heroes, enemy):
             # checking dead enemy
             if graveyard(enemy):
                 print("You have won this fight")
-                heroes.get(0).experience(challenge)
+                heroes[0].experience(challenge)
                 return True
 
         turn_attacks(enemy, heroes)

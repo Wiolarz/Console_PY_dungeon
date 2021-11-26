@@ -32,10 +32,10 @@ def walk(company, place):
         
         elif balance.world.main_quest.type.equals("units.monsters") and balance.world.main_quest.target_place == place.id:
             print("you have defeated " + killed + " units.monsters")
-            balance.world.main_quest.units.monsters_to_kill -= killed
-            if balance.world.main_quest.units.monsters_to_kill <= 0:
+            balance.world.main_quest.monsters_to_kill -= killed
+            if balance.world.main_quest.monsters_to_kill <= 0:
                 print("You won")
-                print(" quest: ")
+                print("New quest: ")
                 balance.world.main_quest = jobs.quest()
                 balance.world.main_quest.days_to_complete += 1
             
@@ -184,7 +184,7 @@ def fight(company, enemy):
 
 
 
-def walking(company, world, day):
+def walking(company, world):
     print("1 Exit", end="  ")
     x = 2
     for place in world:
@@ -195,7 +195,7 @@ def walking(company, world, day):
     choice = int(input())  # User input
 
     if choice > 1:  # enter location
-        walk(company, world.get(choice - 2), day)
+        walk(company, world.get(choice - 2))
         return True
 
     return False  # exit world map

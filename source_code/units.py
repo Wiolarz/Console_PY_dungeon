@@ -13,7 +13,7 @@ class unit():
 
         self.level = 1
 
-        self.artifact = None  # only one object item can be assigned to a unit
+        self.artefact = None  # only one object item can be assigned to a unit
 
         # full list of dices used to generate strategy
         self.dice_pool = []
@@ -26,17 +26,17 @@ class unit():
         self.magic = [[]]
 
     def item_change(self):
-        self.dice_pool = [4, 5]
+        self.dice_pool = []
         self.effects_pool = []
         # adding item base pool of dices
 
-        for dice in self.artifact.dice_pool:
+        for dice in self.artefact.base_pool:
             self.dice_pool.append(dice)
 
         self.turn_pool = self.dice_pool.copy()
 
         # adding item effect pool
-        for spell in self.artifact.magic_pool:
+        for spell in self.artefact.magic_pool:
             self.effects_pool.append(spell)
 
         self.generate_strategy()  # adding new dices to the strategy
@@ -159,7 +159,7 @@ class hero(unit):
         rouge = [2, 3, 1]
         mage = [1, 2, 3]
         roles = [knight, rouge, mage]
-        role = roles[random.randint(0, len(roles))]
+        role = roles[random.randint(0, len(roles) - 1)]
         self.STR = role[0]
         self.AG = role[1]
         self.INT = role[2]
@@ -171,7 +171,6 @@ class hero(unit):
 
 
         self.item_change()
-        self.generate_strategy()
 
         self.max_HP = self.level * balance.strong
         self.HP = self.max_HP

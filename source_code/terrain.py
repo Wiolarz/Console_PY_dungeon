@@ -18,7 +18,7 @@ class earth:
         self.location_number = 7  # max 8
 
     def new_quest(self):
-        self.first_quest = jobs.quest()
+        self.main_quest = jobs.quest()
 
     def generate_location(self):
         for place in range(self.location_number): #
@@ -45,12 +45,10 @@ class location():
 
         self.location_names = []
 
-
         self.amount_location = amount
 
     def short_print(self):
         return self.name + " " + roman_numbers(self.level)
-    
 
     def name_generator(self):
     
@@ -68,13 +66,10 @@ class location():
                 exit(343)
             new_name = prefix[random.randint(0, len(prefix)-1)] + " " + core[random.randint(0, len(core)-1)]
 
-
-
             if new_name in self.location_names:
                 new_unique = False
             else:
                 new_unique = True
-
 
         self.location_names.append(new_name)
         return new_name

@@ -1,4 +1,3 @@
-import terrain
 import units
 import economy
 import balance
@@ -26,7 +25,7 @@ def gameplay_loop(heroes):
             print(balance.world.main_quest.fail_story)
             exit()
 
-        ##if choice == 0: # starting value, also assigned in case of wrong input
+        # if choice == 0: # starting value, also assigned in case of wrong input
 
         if choice  < 3: # if choice was not to explore the days are not passing
             pass
@@ -37,23 +36,19 @@ def gameplay_loop(heroes):
             heroes.append(units.create_mercenary(balance.world.days))
             item_list = economy.generate_items(balance.world.days)
 
-
-
             balance.world.main_quest.print_info()
             print("Day " + balance.world.days + "  1 info   2 shop  3 world  9 Exit game")
 
             choice = int(input())
 
-
             # list of locations
-
             if choice == 1:
-                heroes[0].printing_all_stats() # info
+                heroes[0].printing_all_stats()  # info
             elif choice == 2:
-                economy.shop(heroes[0], item_list) # shop
+                economy.shop(heroes[0], item_list)  # shop
             elif choice == 3:
                 if not explore.walking(heroes, balance.world, balance.world.days):
-                    choice = 0 # player didn't explore anything
+                    choice = 0  # player didn't explore anything
                     # TODO this system is bad, day system should be remade
             elif choice == 8:
                 heroes[0].cheats()

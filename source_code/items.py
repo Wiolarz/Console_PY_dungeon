@@ -20,10 +20,8 @@ class item():
             power = balance.max_power
         self.level = power
 
-        type = [0, 0, 0] # used to create types of items
+        type = [0, 0, 0]  # used to create types of items
 
-
-        # rozkmin i skometuj matole
 
 
         for i in range(3):
@@ -42,10 +40,7 @@ class item():
             counter += 1
             if counter == 3:
                 counter = 0
-        
 
-
-        # now there is a need to design interesting system :)))
 
 
         '''
@@ -110,7 +105,7 @@ class item():
         # strong_dices =
 
         for i in range(self.STR_req):
-            self.base_pool.append(balance.dices[random.randint(0, (scope - 3)) + 3])  # magic number
+            self.base_pool.append(balance.dices[random.randint(0, (scope - 3 - 1)) + 3])  # magic number
 
         for i in range(self.AG_req):
             self.base_pool.append(balance.dices[random.randint(0, weak_dices)])

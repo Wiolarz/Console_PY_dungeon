@@ -28,13 +28,13 @@ shop_items_amount = 15
 
 week = 7
 
-world = None
+global world
 
 import terrain
 
 def generate_world():
+    global world
     world = terrain.earth
-
 
 
 

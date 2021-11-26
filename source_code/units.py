@@ -66,7 +66,6 @@ class Unit:
                 counter = 0
 
     def effect(self, dices, action):
-        # we are making copy to avoid saving effect to an object
         for spell in self.magic[action]:
             spell.use(dices)
 
@@ -102,9 +101,8 @@ class Monster(Unit):
         self.artefact = items.Item(power)
         self.item_change()
 
-
-        # TODO THIS HP IS PPRETTY LOW MAYBE THATS WHY GAME IS SO EZZ
-        self.max_HP = power
+        # TODO this hp is really has low value maybe that's why game is so easy
+        self.max_HP = (power * 2)
         self.HP = self.max_HP
 
 
@@ -177,14 +175,14 @@ class Hero(Unit):
             self.level += 1
 
             levelups = []
-            if self.STR < balance.dices.length:
+            if self.STR < len(balance.dices):
                 levelups.append(0)
-            if self.AG < balance.dices.length:
+            if self.AG < len(balance.dices):
                 levelups.append(1)
-            if self.INT < balance.dices.length:
+            if self.INT < len(balance.dices):
                 levelups.append(2)
 
-            rand = levelups[random.randint(0, len(levelups))]
+            rand = levelups[random.randint(0, len(levelups) - 1)]
             if rand == 0:
                 self.STR += 1
             elif rand == 1:

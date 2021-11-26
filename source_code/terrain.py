@@ -21,15 +21,40 @@ class Earth:
     def generate_location(self):
         x = 0
         for place in range(self.amount_location):
-            self.locations.append(Location(place + 1, self.amount_location, x))  # location level, overall location number
+            self.locations.append(Location(place + 1, self.amount_location, x))  # level, overall location number
             x += 1
+
+
+def name_generator():
+
+    prefix = ["", "Green", "Dark", "Toxic", "Inferno", "Orc", "Goblin", "Dragon"]
+    core = ["Forest", "Cave", "Dungeon", "Town", "Village", "Mountains", "Graveyard"]
+    # suffix = ["", ""]
+    new_unique = False
+    new_name = ""
+
+    cheking_wrong_balance = 0
+    while not new_unique:
+        cheking_wrong_balance += 1
+        if cheking_wrong_balance > balance.world.amount_location * 5:
+            print("Error: cannot create random new location name")
+            exit(343)
+        new_name = prefix[random.randint(0, len(prefix)-1)] + " " + core[random.randint(0, len(core)-1)]
+
+        if new_name in balance.world.location_names:
+            new_unique = False
+        else:
+            new_unique = True
+
+    balance.world.location_names.append(new_name)
+    return new_name
 
 
 class Location:
     def __init__(self, location_level, amount, id_x):
         self.id = id_x
 
-        self.name = self.name_generator()
+        self.name = name_generator()
 
         self.level = location_level
         self.quest_level = location_level + 2
@@ -48,28 +73,4 @@ class Location:
 
     def short_print(self):
         return self.name + " " + roman_numbers(self.level)
-
-    def name_generator(self):
-    
-        prefix = ["", "Green", "Dark", "Toxic", "Inferno", "Orc", "Goblin", "Dragon"]
-        core = ["Forest", "Cave", "Dungeon", "Town", "Village", "Mountains", "Graveyard"]
-        # suffix = ["", ""]
-        new_unique = False
-        new_name = ""
-
-        cheking_wrong_balance = 0
-        while not new_unique:
-            cheking_wrong_balance += 1
-            if cheking_wrong_balance > balance.world.amount_location * 5:
-                print("Error: cannot create random new location name")
-                exit(343)
-            new_name = prefix[random.randint(0, len(prefix)-1)] + " " + core[random.randint(0, len(core)-1)]
-
-            if new_name in balance.world.location_names:
-                new_unique = False
-            else:
-                new_unique = True
-
-        balance.world.location_names.append(new_name)
-        return new_name
     

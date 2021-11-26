@@ -74,10 +74,10 @@ def generate_enemy(level):
         
     elif x == 1:
         # random
-        split = random.randint(0,  level-2) + 2  # 2 -> level-1
+        split = random.randint(0,  (level - 2)) + 2  # 2 -> level-1
         resource = level
         for i in range(split):
-            next_level = (resource / split) + 1
+            next_level = (resource // split) + 1
             enemy.append(units.Monster(next_level))
             resource -= next_level
         

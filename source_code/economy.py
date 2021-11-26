@@ -7,7 +7,7 @@ import balance
 def generate_items(days):
     # generation of list of item objects to a shop
     shops_items = []
-    power = (balance.max_power/2) + days
+    power = (balance.max_power // 2) + days
     if power > balance.max_power:
         power = balance.max_power
     
@@ -31,10 +31,10 @@ def generate_folders(all_items):
         folders.append([])
 
     for thing in all_items:
-        if thing.level < balance.max_power/4:  # weakest items
+        if thing.level < balance.max_power // 4:  # weakest items
             folders[0].append(thing)
 
-        elif thing.level < balance.max_power/2.75:  # medium items
+        elif thing.level < balance.max_power // 2.75:  # medium items
             folders[1].append(thing)
 
         else:  # best items

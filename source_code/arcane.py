@@ -3,6 +3,31 @@ import random
 import balance
 
 
+def dice_change(dice, value):
+    # used by other effects to change dice to another one
+    address = 0
+    for d in balance.dices:
+        if d == dice:
+            break
+
+        address += 1
+
+    for i in range(abs(value)):
+        if value > 0:
+            if (len(balance.dices) - 1) == address:
+                return dice  # if dice is already at max value we cannot upgrade it
+            address += 1
+            dice = balance.dices[address]
+        else:
+            if 0 == address:
+                return dice  # if dice is already at min value we cannot downgrade it
+
+            address -= 1
+            dice = balance.dices[address]
+
+    return dice
+
+
 class Effect:
     def __init__(self, usage, effect_type, force):
         self.usages = usage
@@ -53,7 +78,7 @@ class Effect:
                         dices_idx = idx
                     idx += 1
 
-                dices[dices_idx] = self.dice_change(dices[dices_idx], -self.power)
+                dices[dices_idx] = dice_change(dices[dices_idx], -self.power)
             except:
                 print("Cannot work with dice pool smaller than 2")
 
@@ -63,32 +88,9 @@ class Effect:
             try:
                 # effect
                 target = random.randint(0, (len(dices)-1))
-                dices[target] = self.dice_change(dices[target], -self.power)
+                dices[target] = dice_change(dices[target], -self.power)
             except:
                 print("cannot work with dice pool smaller than 2")
 
         # Functions called by the effects:
 
-    def dice_change(self, dice, value):
-        # used by other effects to change dice to another one
-        address = 0
-        for d in balance.dices:
-            if d == dice:
-                break
-            
-            address += 1
-
-        for i in range(abs(value)):
-            if value > 0:
-                if balance.dices.length-1 == address:
-                    return dice  # if dice is already at max value we cannot upgrade it
-                address += 1
-                dice = balance.dices[address]
-            else:
-                if 0 == address:
-                    return dice  # if dice is already at min value we cannot downgrade it
-                
-                address -= 1
-                dice = balance.dices[address]
-
-        return dice

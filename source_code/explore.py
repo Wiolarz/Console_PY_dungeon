@@ -18,7 +18,7 @@ def walk(heroes, place):
             if fight(heroes, generate_enemy(place.level)):
                 killed += place.level
                
-        if balance.world.main_quest.type.equals("boss") and balance.world.main_quest.target_place == place.id:
+        if balance.world.main_quest.style == "boss" and balance.world.main_quest.target_place == place.id:
             print("You encounter boss, his level: " + place.quest_level)
             boss = [units.Monster(place.quest_level)]
             if fight(heroes, boss):
@@ -28,7 +28,7 @@ def walk(heroes, place):
                 balance.world.main_quest = jobs.Quest()
                 balance.world.main_quest.days_to_complete += 1
 
-        elif balance.world.main_quest.type.equals("units.monsters") and\
+        elif balance.world.main_quest.style == "units.monsters" and\
                 balance.world.main_quest.target_place == place.id:
 
             print("you have defeated " + killed + " units.monsters")
@@ -44,7 +44,7 @@ def walk(heroes, place):
 
 def chest(heroes, quality):
     # event during exploring which rewards player
-    heroes.get(0).gold += quality
+    heroes[0].gold += quality
 
 
 def generate_enemy(level):
@@ -108,9 +108,9 @@ def attack(dice_pool):
 
 
 def graveyard(fighters):
-    for fighter in range(fighters.size() - 1, 0, -1):
-        if fighters.get(fighter).HP <= 0:
-            fighters.remove(fighter)
+    for index in range(len(fighters) - 1, 0, -1):
+        if fighters[index].HP <= 0:
+            fighters.pop(index)
 
     return len(fighters) == 0
 
@@ -129,13 +129,13 @@ def turn_attacks(attacker, defender):
             # here could be a choice to perform different action instead
             target = random.randint(0, len(defender)-1)
 
-            success = attack(fighter.strategy.get(action))
+            success = attack(fighter.strategy[action])
 
             for i in range(success):
                 defender[target].HP -= 1
 
             if success > 0:
-                fighter.Effect(defender[target].turn_pool, action)
+                fighter.effect(defender[target].turn_pool, action)
 
 
 def fight(heroes, enemy):
@@ -180,15 +180,16 @@ def fight(heroes, enemy):
 def walking(heroes, world):
     print("1 Exit", end="  ")
     x = 2
-    for place in world:
+    for place in world.locations:
 
-        print(x + " " + place.short_print(), end="  ")
+        print(x, end="  ")
+        print(place.short_print(), end=" ")
         x += 1
     print()
     choice = int(input())  # User input
 
     if choice > 1:  # enter location
-        walk(heroes, world.get(choice - 2))
+        walk(heroes, world.locations[choice - 2])
         return True
 
     return False  # exit world map

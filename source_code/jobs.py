@@ -22,7 +22,7 @@ class Quest:
         self.random_quest()
 
     def print_info(self):
-        print("You have: %d days to " + self.story % self.days_to_complete)
+        print(("You have: %d days to " + self.story) % self.days_to_complete)
         if self.style == "boss":
             print("Enemy boss awaits at " + roman_numbers(self.target_place + 1) + " location")
         elif self.style == "gold":
@@ -44,14 +44,14 @@ class Quest:
 
         for level in difficulty:
             if current_day < level[0]:
-                location = random.randint(0, (balance.world.amount_location / level[2]))
+                location = random.randint(0, int(balance.world.amount_location / level[2]))
 
-                time = level[1]
-                return location, time, level[0]
+                self.days_to_complete = level[1]
+                return location, level[0]
 
-        time = 1
+
         location = balance.world.amount_location - 1  # last spot
-        self.days_to_complete = time
+        self.days_to_complete = 1
         return location, base * balance.powerful
 
     def random_quest(self):

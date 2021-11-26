@@ -30,15 +30,15 @@ def generate_folders(all_items):
     for i in range(amount_of_folders):
         folders.append([])
 
-        for thing in all_items:
-            if thing.level < balance.max_power/4:  # weakest items
-                folders[0].append(thing)
-            
-            elif thing.level < balance.max_power/2.75:  # medium items
-                folders[1].append(thing)
-            
-            else:  # best items
-                folders[2].append(thing)
+    for thing in all_items:
+        if thing.level < balance.max_power/4:  # weakest items
+            folders[0].append(thing)
+
+        elif thing.level < balance.max_power/2.75:  # medium items
+            folders[1].append(thing)
+
+        else:  # best items
+            folders[2].append(thing)
         
         return folders
     
@@ -91,8 +91,8 @@ def shop(player, item_list):
         # Info for player
         print("Welcome to shop 1 exit 2 medic's shop")
 
-        for i in len(folders):
-            print(i+3 + " folder", end=" ")
+        for i in range(len(folders)):
+            print("%d folder" % (i+3), end=" ")
         
         print()
 
@@ -141,7 +141,7 @@ def auto_heal(player, healing):
         for item in range(len(healing) - 1, 0, -1):
             while player.HP + healing[item][0] <= player.max_HP and player.pay(healing[item][1]):
                 player.HP += healing[item][0]
-    print("gold: " + player.gold + " HP: " + player.HP)
+    print("gold: %d HP: %f" % (player.gold, player.HP))
 
 
 def roman_numbers(value):

@@ -89,7 +89,7 @@ class Monster(Unit):
         rouge = [2, 3, 1]
         mage = [1, 2, 3]
         roles = [knight, rouge, mage]
-        role = roles[random.randint(0, len(roles))]
+        role = roles[random.randint(0, len(roles)-1)]
         self.STR = role[0]
         self.AG = role[1]
         self.INT = role[2]

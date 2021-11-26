@@ -7,27 +7,27 @@ from economy import roman_numbers
 
 class Earth:
     def __init__(self):
-        self.days = 1
+        self.current_day = 1
         self.main_quest = None
         self.amount_location = 7  # max 8
         self.locations = []
-        self.generate_location()
         #
 
-        # location_names
-
+        self.location_names = []
 
     def new_quest(self):
         self.main_quest = jobs.Quest()
 
     def generate_location(self):
+        x = 0
         for place in range(self.amount_location):
-            self.locations.append(Location(place + 1, self.amount_location))  # location level, overall location number
+            self.locations.append(Location(place + 1, self.amount_location, x))  # location level, overall location number
+            x += 1
 
 
 class Location:
-    def __init__(self, location_level, amount):
-        # id = location.identification += 1 # debug
+    def __init__(self, location_level, amount, id_x):
+        self.id = id_x
 
         self.name = self.name_generator()
 
@@ -65,11 +65,11 @@ class Location:
                 exit(343)
             new_name = prefix[random.randint(0, len(prefix)-1)] + " " + core[random.randint(0, len(core)-1)]
 
-            if new_name in self.location_names:
+            if new_name in balance.world.location_names:
                 new_unique = False
             else:
                 new_unique = True
 
-        self.location_names.append(new_name)
+        balance.world.location_names.append(new_name)
         return new_name
     

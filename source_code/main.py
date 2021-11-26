@@ -2,16 +2,19 @@ import units
 import economy
 import balance
 import explore
+import terrain
 
 
 def gameplay_loop(heroes):
-    balance.generate_world()
+    balance.world = terrain.Earth()
+    balance.world.generate_location()
+    balance.world.new_quest()
 
     balance.world.main_quest.print_info()
 
-    heroes.append(units.create_mercenary(balance.world.days))
+    heroes.append(units.create_mercenary(balance.world.current_day))
 
-    print(balance.world.days)
+    print(balance.world.current_day)
     print(heroes)
 
     item_list = economy.generate_items(1)
@@ -31,12 +34,12 @@ def gameplay_loop(heroes):
         else:
             balance.world.main_quest.days_to_complete -= 1
             balance.world.main_quest.check_quest(heroes[0])
-            balance.world.days += 1
-            heroes.append(units.create_mercenary(balance.world.days))
-            item_list = economy.generate_items(balance.world.days)
+            balance.world.current_day += 1
+            heroes.append(units.create_mercenary(balance.world.current_day))
+            item_list = economy.generate_items(balance.world.current_day)
 
-            balance.world.main_quest.print_info()
-            print("Day " + balance.world.days + "  1 info   2 shop  3 world  9 Exit game")
+        balance.world.main_quest.print_info()
+        print("Day %d  1 info   2 shop  3 world  9 Exit game" % balance.world.current_day)
 
         choice = int(input())
 

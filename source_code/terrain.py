@@ -4,11 +4,12 @@ import jobs
 import balance
 from economy import roman_numbers
 
-class earth:
+
+class Earth:
     def __init__(self):
         self.days = 1
 
-        self.main_quest = jobs.quest()
+        self.main_quest = jobs.Quest()
 
         self.locations = []
         self.generate_location()
@@ -18,17 +19,16 @@ class earth:
         self.location_number = 7  # max 8
 
     def new_quest(self):
-        self.main_quest = jobs.quest()
+        self.main_quest = jobs.Quest()
 
     def generate_location(self):
-        for place in range(self.location_number): #
-            self.locations.append(location(place+1, self.location_number))  # location level, overall location number
+        for place in range(self.location_number):
+            self.locations.append(Location(place + 1, self.location_number))  # location level, overall location number
 
 
-
-class location():
+class Location:
     def __init__(self, location_level, amount):
-        #id = location.identification += 1 # debug
+        # id = location.identification += 1 # debug
 
         self.name = self.name_generator()
 
@@ -39,9 +39,9 @@ class location():
 
         self.chest_gold = location_level * balance.medium
 
-        self.density = 5 # number of events in location
-        self.chest_chance = 3 # %(10) chest chance
-        self.quest_enemy = 5 # %(10) chance of quest related enemy
+        self.density = 5  # number of events in location
+        self.chest_chance = 3  # %(10) chest chance
+        self.quest_enemy = 5  # %(10) chance of quest related enemy
 
         self.location_names = []
 
@@ -54,7 +54,7 @@ class location():
     
         prefix = ["", "Green", "Dark", "Toxic", "Inferno", "Orc", "Goblin", "Dragon"]
         core = ["Forest", "Cave", "Dungeon", "Town", "Village", "Mountains", "Graveyard"]
-        #sufix = ["", ""]
+        # suffix = ["", ""]
         new_unique = False
         new_name = ""
 

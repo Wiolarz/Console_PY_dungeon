@@ -2,7 +2,8 @@ import random
 import balance
 import items
 
-class unit():
+
+class Unit:
     def __init__(self):
         self.STR = 1  # STRENGTH number of sides in bonus dices
         self.AG = 1  # AGILITY number of additional dices
@@ -48,8 +49,6 @@ class unit():
         for action in range(self.attack_speed):
             self.strategy.append([])
             self.magic.append([])
-        
-
 
         # place where strategy is generated
         counter = 0
@@ -66,36 +65,24 @@ class unit():
             if counter == self.attack_speed:
                 counter = 0
 
-
-
-    def efffect(self, dices, action):
+    def effect(self, dices, action):
         # we are making copy to avoid saving effect to an object
         for spell in self.magic[action]:
             spell.use(dices)
 
-
-    # TODO CHANGE THIS ATTACK IT'S BAD
-    def attack(self, dices):
-        value = 0
-        for i in range(len(dices)):
-            value += random.randint(1, dices[i])
-        return value
-
-
-    # TODO REMOVE IT OR SOMETHING
     def printing_all_stats(self):
-        print("STR: " + self.STR + " AG " + self.AG + " INT: " + self.INT)
-        print("HP: " + self.HP + " MAX_HP: " + self.max_HP)
-        print("Item base: " + self.dice_pool)
-        print("Strategy: " + self.strategy)
+        print("STR: %d  AG: %f  INT: %g" % (self.STR, self.AG, self.INT))
+        print("HP: %d MAX_HP: %f" % (self.HP, self.max_HP))
+        print("Item base: %d" % self.dice_pool)
+        print("Strategy: %d" % self.strategy)
         print("Magic: ")
-        for spell_list in self.magic:
+        for spell_list in self.magic:  # TODO i think it can be contained in a single line
             for spell in spell_list:
-                print(spell.short_print())
+                print(spell.short_print(), end=" ")
         print()
 
 
-class monster(unit):
+class Monster(Unit):
     def __init__(self, power):
         super().__init__()
         knight = [3, 2, 1]
@@ -112,7 +99,7 @@ class monster(unit):
             print("minus level for mercenary        ERROR")
         self.level = power
 
-        self.artefact = items.item(power)
+        self.artefact = items.Item(power)
         self.item_change()
 
 
@@ -121,15 +108,12 @@ class monster(unit):
         self.HP = self.max_HP
 
 
-
-
-
 def create_mercenary(power):
-    mercenary = hero()
-    knight = {3, 2, 1}
-    rouge = {2, 3, 1}
-    mage = {1, 2, 3}
-    roles = {knight, rouge, mage}
+    mercenary = Hero()
+    knight = [3, 2, 1]
+    rouge = [2, 3, 1]
+    mage = [1, 2, 3]
+    roles = [knight, rouge, mage]
     role = roles[random.randint(1, len(roles))-1]
 
     if power < 1:
@@ -142,7 +126,7 @@ def create_mercenary(power):
     mercenary.AG = role[1]
     mercenary.INT = role[2]
 
-    mercenary.artefact = items.item(power)
+    mercenary.artefact = items.Item(power)
     mercenary.item_change()
 
     mercenary.max_HP = power
@@ -150,7 +134,7 @@ def create_mercenary(power):
     return mercenary
 
 
-class hero(unit):
+class Hero(Unit):
     def __init__(self):
         super().__init__()
         self.exp = 0
@@ -164,11 +148,9 @@ class hero(unit):
         self.AG = role[1]
         self.INT = role[2]
 
-        self.artefact = items.item(1)
-
+        self.artefact = items.Item(1)
 
         self.artefact.set_stats(self.STR, self.AG, self.INT)
-
 
         self.item_change()
 
@@ -214,9 +196,9 @@ class hero(unit):
 
     def stat_changed(self):
         # adjusting HP
-        new_max_HP = self.level * balance.strong
-        hp_correct = new_max_HP - self.max_HP
-        self.max_HP = new_max_HP
+        new_max_hp = self.level * balance.strong
+        hp_correct = new_max_hp - self.max_HP
+        self.max_HP = new_max_hp
         self.HP += hp_correct
 
     def heal(self, value):
@@ -231,7 +213,6 @@ class hero(unit):
         self.max_HP = 420
         self.HP = self.max_HP
         self.gold += 1000
-
 
     def printing_all_stats(self):
         pass
@@ -256,3 +237,9 @@ class hero(unit):
         '''
 
 
+# TODO CHANGE THIS ATTACK IT'S BAD
+def attack(dices):
+    value = 0
+    for i in range(len(dices)):
+        value += random.randint(1, dices[i])
+    return value

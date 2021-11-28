@@ -10,12 +10,9 @@ def gameplay_loop(heroes):
     balance.world.generate_location()
     balance.world.new_quest()
 
-    balance.world.main_quest.print_info()
-
     heroes.append(units.create_mercenary(balance.world.current_day))
 
-    print(balance.world.current_day)
-    print(heroes)
+    # print(heroes)
 
     item_list = economy.generate_items(1)
 

@@ -19,7 +19,7 @@ def walk(heroes, place):
                 killed += place.level
                
         if balance.world.main_quest.style == "boss" and balance.world.main_quest.target_place == place.id:
-            print("You encounter boss, his level: " + place.quest_level)
+            print("You encounter boss, his level: %d" % place.quest_level)
             boss = [units.Monster(place.quest_level)]
             if fight(heroes, boss):
             
@@ -31,7 +31,7 @@ def walk(heroes, place):
         elif balance.world.main_quest.style == "units.monsters" and\
                 balance.world.main_quest.target_place == place.id:
 
-            print("you have defeated " + killed + " units.monsters")
+            print("you have defeated %d units.monsters" % killed)
             balance.world.main_quest.monsters_to_kill -= killed
             if balance.world.main_quest.monsters_to_kill <= 0:
                 print("You won")
@@ -150,7 +150,6 @@ def fight(heroes, enemy):
 
     for rounds in range(50):
         choice = int(input())
-        print("test")
         if choice == 1:  # escape attempt
             # basic roll for each fighter, if player side succeeds
             # if success return false
@@ -181,10 +180,10 @@ def walking(heroes, world):
     print("1 Exit", end="  ")
     x = 2
     for place in world.locations:
-
         print(x, end="  ")
         print(place.short_print(), end=" ")
         x += 1
+
     print()
     choice = int(input())  # User input
 

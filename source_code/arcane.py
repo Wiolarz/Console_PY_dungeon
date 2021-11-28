@@ -41,7 +41,7 @@ class Effect:
         print("%-10s", ("power: " + self.power + "]"))
 
     def short_print(self):
-        text = self.usages + " " + self.type + " " + self.power + " "
+        text = str(self.usages) + " " + str(self.type) + " " + str(self.power)
         # print(text)
         return text
 

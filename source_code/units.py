@@ -70,14 +70,20 @@ class Unit:
             spell.use(dices)
 
     def printing_all_stats(self):
-        print("STR: %d  AG: %f  INT: %g" % (self.STR, self.AG, self.INT))
-        print("HP: %d MAX_HP: %f" % (self.HP, self.max_HP))
-        print("Item base: %d" % self.dice_pool)
-        print("Strategy: %d" % self.strategy)
-        print("Magic: ")
+        print("STR: %d  AG: %d  INT: %d" % (self.STR, self.AG, self.INT))
+        print("HP: %d MAX_HP: %d" % (self.HP, self.max_HP))
+        print("Item base:", end=" ")
+        print(self.dice_pool)
+        print("Strategy:", end=" ")
+        print(self.strategy)
+        print("Magic:", end=" ")
         for spell_list in self.magic:  # TODO i think it can be contained in a single line
-            for spell in spell_list:
-                print(spell.short_print(), end=" ")
+            print("[", end="")
+            if(len(spell_list) > 0):
+                for spell in spell_list[:-1]:
+                    print(spell.short_print(), end=" | ")
+                print(spell_list[-1].short_print(), end="")
+            print("]", end=" ")
         print()
 
 
@@ -213,26 +219,10 @@ class Hero(Unit):
         self.gold += 1000
 
     def printing_all_stats(self):
-        pass
-        '''
+        super().printing_all_stats()
         # we add hero specific values
-        System.out.println("STR: " + STR + " AG: " + AG + " INT: " + INT);
-        System.out.println("HP: " + HP + " MAX_HP: " + max_HP);
-        System.out.println("Item base: " + dice_pool);
-        System.out.println("Strategy: " + strategy);
-        System.out.print("MAGIC: ");
-        for (ArrayList<effect> spell_list : magic)
-        {
-            output.print("[");
-            for (effect spell : spell_list)
-            {
-                output.print(spell.short_print());
-            }
-            output.print("] ");
-        }
-        System.out.println();
-        System.out.println("Gold: " + gold + " Level: " + level + " Exp: " + exp);
-        '''
+        print("Gold: %d Level: %d Exp: %d" % (self.gold, self.level, self.exp))
+
 
 
 # TODO CHANGE THIS ATTACK IT'S BAD

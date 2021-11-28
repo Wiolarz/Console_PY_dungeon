@@ -31,16 +31,16 @@ def generate_folders(all_items):
         folders.append([])
 
     for thing in all_items:
-        if thing.level < balance.max_power // 4:  # weakest items
+        if thing.level < (balance.max_power / 4):  # weakest items
             folders[0].append(thing)
 
-        elif thing.level < balance.max_power // 2.75:  # medium items
+        elif thing.level < (balance.max_power / 2.75):  # medium items
             folders[1].append(thing)
 
         else:  # best items
             folders[2].append(thing)
         
-        return folders
+    return folders
     
 
 def open_folder(player,  folder):
@@ -61,11 +61,13 @@ def open_folder(player,  folder):
             info2.append(spell.short_print())
         
         # printing details about items
-        print("%-16s", x + 2 + " level: " + roman_numbers(thing.level), end="")
-        print("%-12s", ("price: " + thing.level * balance.medium), end="")
-        print("%-34s", "STR_req: %d AG_req: %f INT_req: %e" % (thing.STR_req, thing.AG_req, thing.INT_req), end=" ")
-        print("%-70s", ("base: " + info), end="")
-        print("%-70s", ("Magic: " + info2), end="")
+        print(("%d level: " + roman_numbers(thing.level)) % (x + 2), end="")  # "%-16s"
+        print("price: %d" % (thing.level * balance.medium), end="")  # "%-12s",
+        print("STR_req: %d AG_req: %d INT_req: %d" % (thing.STR_req, thing.AG_req, thing.INT_req), end=" ")  # "%-34s",
+        print("base:", end=" ")  # "%-70s",
+        print(info, end=" ")
+        print("Magic:", end=" ")  # "%-70s", (
+        print(info2, end=" ")
         print()
 
     choice = 0
@@ -112,7 +114,7 @@ def medic(player):
     print("Welcome to medic's shop 1 exit 2 auto-heal", end=" ")
     x = 3
     for item in healing:
-        print("%d [heal: %f price: %e]" % (x, item[0], item[1]), end=" ")
+        print("%d [heal: %d price: %d]" % (x, item[0], item[1]), end=" ")
         x += 1
 
     print()
@@ -141,7 +143,7 @@ def auto_heal(player, healing):
         for item in range(len(healing) - 1, 0, -1):
             while player.HP + healing[item][0] <= player.max_HP and player.pay(healing[item][1]):
                 player.HP += healing[item][0]
-    print("gold: %d HP: %f" % (player.gold, player.HP))
+    print("gold: %d HP: %d" % (player.gold, player.HP))
 
 
 def roman_numbers(value):

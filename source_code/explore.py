@@ -6,6 +6,7 @@ import jobs
 
 
 def walk(heroes, place):
+    world = balance.world
     killed = 0
     for i in range(balance.events):
         event = random.randint(0,  10)
@@ -18,26 +19,26 @@ def walk(heroes, place):
             if fight(heroes, generate_enemy(place.level)):
                 killed += place.level
                
-        if balance.world.main_quest.style == "boss" and balance.world.main_quest.target_place == place.id:
+        if world.main_quest.style == "boss" and world.main_quest.target_place == place.id:
             print("You encounter boss, his level: %d" % place.quest_level)
             boss = [units.Monster(place.quest_level)]
             if fight(heroes, boss):
             
                 print("You won")
                 print(" quest: ")
-                balance.world.main_quest = jobs.Quest()
-                balance.world.main_quest.days_to_complete += 1
+                world.main_quest = jobs.Quest()
+                world.main_quest.days_to_complete += 1
 
-        elif balance.world.main_quest.style == "units.monsters" and\
-                balance.world.main_quest.target_place == place.id:
+        elif world.main_quest.style == "units.monsters" and\
+                world.main_quest.target_place == place.id:
 
             print("you have defeated %d units.monsters" % killed)
-            balance.world.main_quest.monsters_to_kill -= killed
-            if balance.world.main_quest.monsters_to_kill <= 0:
+            world.main_quest.monsters_to_kill -= killed
+            if world.main_quest.monsters_to_kill <= 0:
                 print("You won")
                 print("New quest: ")
-                balance.world.main_quest = jobs.Quest()
-                balance.world.main_quest.days_to_complete += 1
+                world.main_quest = jobs.Quest()
+                world.main_quest.days_to_complete += 1
             
 
 # walking functions

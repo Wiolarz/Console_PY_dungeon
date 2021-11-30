@@ -26,7 +26,7 @@ class Quest:
         if self.style == "boss":
             print("Enemy boss awaits at " + roman_numbers(self.target_place + 1) + " location")
         elif self.style == "gold":
-            print("You need to gather %d" % self.quest_gold)
+            print("You need to gather %d" % self.quest_gold + " gold")
         elif self.style == "monsters":
             print("Enemy monsters awaits at " + roman_numbers(self.target_place + 1) +
                   " location %d are still alive" % self.monsters_to_kill)

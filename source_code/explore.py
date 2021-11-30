@@ -1,5 +1,6 @@
 import random
 
+import battle
 import balance
 import units
 import jobs
@@ -17,29 +18,29 @@ def walk(heroes, place):
             chest(heroes, place.chest_gold)
         else:
             print("You fight")
-            if fight(heroes, generate_enemy(place.level)):
+            if battle.fight(heroes, generate_enemy(place.level)):
                 loot(heroes, place)
                 killed += place.level
 
-        if world.main_quest.style == "boss" and world.main_quest.target_place == place.id:
-            print("You encounter boss, his level: %d" % place.quest_level)
-            boss = [units.Monster(place.quest_level)]
-            if fight(heroes, boss):
-                print("You won")
-                print(" quest: ")
-                world.main_quest = jobs.Quest()
-                world.main_quest.days_to_complete += 1
+    if world.main_quest.style == "boss" and world.main_quest.target_place == place.id:
+        print("You encounter boss, his level: %d" % place.quest_level)
+        boss = [units.Monster(place.quest_level)]
+        if battle.fight(heroes, boss):
+            print("You won")
+            print(" quest: ")
+            world.main_quest = jobs.Quest()
+            world.main_quest.days_to_complete += 1
 
-        elif world.main_quest.style == "units.monsters" and \
-                world.main_quest.target_place == place.id:
+    elif world.main_quest.style == "monsters" and \
+            world.main_quest.target_place == place.id:
+        print("you have defeated %d pesky monsters" % killed)
+        world.main_quest.monsters_to_kill -= killed
 
-            print("you have defeated %d units.monsters" % killed)
-            world.main_quest.monsters_to_kill -= killed
-            if world.main_quest.monsters_to_kill <= 0:
-                print("You won")
-                print("New quest: ")
-                world.main_quest = jobs.Quest()
-                world.main_quest.days_to_complete += 1
+        if world.main_quest.monsters_to_kill <= 0:
+            print("You won")
+            print("New quest: ")
+            world.main_quest = jobs.Quest()
+            world.main_quest.days_to_complete += 1
 
 
 # walking functions
@@ -50,10 +51,12 @@ def chest(heroes, quality):
 
 
 def book(heroes, quality):
+    # event during exploring which rewards player
     heroes[0].experience(quality)
 
 
 def loot(heroes, place):
+    # create random exploration event rewarding the player
     if random.randint(0, 1) == 1:
         print("You looted a chest")
         chest(heroes, place.chest_gold)
@@ -103,92 +106,6 @@ def generate_enemy(level):
         enemy.append(units.Monster(level))
 
     return enemy
-
-
-# fight functions
-
-def attack(dice_pool):
-    score = units.attack(dice_pool)
-
-    # counting number of successes
-    success = 0
-    difficulty = 6
-
-    while difficulty < score:
-        score -= difficulty
-        difficulty = (difficulty * 1.5)
-        success += 1
-
-    return success
-
-
-def graveyard(fighters):
-    for index in range(len(fighters) - 1, -1, -1):
-        if fighters[index].HP <= 0:
-            fighters.pop(index)
-
-    return len(fighters) == 0
-
-
-def turn_attacks(attacker, defender):
-    # before attack we remove effects from defender
-    for fighter in defender:
-        fighter.turn_pool = fighter.dice_pool
-
-    # before player attacks we apply effects from players attack to their attacks
-    for fighter in attacker:
-        fighter.generate_strategy()
-
-    for fighter in attacker:
-        for action in range(fighter.attack_speed):
-            # here could be a choice to perform different action instead
-            target = random.randint(0, len(defender) - 1)
-
-            success = attack(fighter.strategy[action])
-
-            for i in range(success):
-                defender[target].HP -= 1
-
-            if success > 0:
-                fighter.effect(defender[target].turn_pool, action)
-
-
-def fight(heroes, enemy):
-    # measure the challenge level
-    challenge = 0
-    for fighter in enemy:
-        challenge += fighter.level
-
-    # enemy[0].printing_all_stats()
-
-    # fighting
-
-    for rounds in range(50):
-        choice = manager.choice()
-        if choice == 1:  # escape attempt
-            # basic roll for each fighter, if player side succeeds
-            # if success return false
-            return False
-
-        elif choice == 2:
-            # player attacks
-            # random targets for now
-            turn_attacks(heroes, enemy)
-
-            # checking dead enemy
-            if graveyard(enemy):
-                print("You have won this fight")
-                heroes[0].experience(challenge)
-                return True
-
-        turn_attacks(enemy, heroes)
-
-        # checking dead in heroes
-        if graveyard(heroes):
-            print("Your heroes has been defeated GAME OVER")
-            exit(666)
-
-    return False  # a draw
 
 
 def walking(heroes, world):

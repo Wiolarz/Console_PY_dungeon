@@ -2,6 +2,7 @@ import random
 
 import items
 import balance
+from source_code import manager
 
 
 def generate_items(days):
@@ -73,7 +74,7 @@ def open_folder(player,  folder):
     choice = 0
     while choice != 9:
     
-        choice = int(input())
+        choice = manager.choice()
 
         if choice == 1:
             return
@@ -98,7 +99,7 @@ def shop(player, item_list):
         
         print()
 
-        choice = int(input())  # Read user input
+        choice = manager.choice()  # Read user input
 
         if choice == 1:
             choice = 9  # exit
@@ -119,7 +120,7 @@ def medic(player):
 
     print()
 
-    choice = int(input())  # User input
+    choice = manager.choice()  # User input
 
     if choice == 1:
         return  # exit medic shop

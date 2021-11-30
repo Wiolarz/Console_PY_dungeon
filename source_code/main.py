@@ -3,6 +3,7 @@ import economy
 import balance
 import explore
 import terrain
+from source_code import manager
 
 
 def gameplay_loop(heroes):
@@ -38,7 +39,7 @@ def gameplay_loop(heroes):
         balance.world.main_quest.print_info()
         print("Day %d  1 info   2 shop  3 world  9 Exit game" % balance.world.current_day)
 
-        choice = int(input())
+        choice = manager.choice()
 
         # list of locations
         if choice == 1:

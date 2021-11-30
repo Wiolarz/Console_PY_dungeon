@@ -3,6 +3,7 @@ import random
 import balance
 import units
 import jobs
+from source_code import manager
 
 
 def walk(heroes, place):
@@ -46,6 +47,9 @@ def walk(heroes, place):
 def chest(heroes, quality):
     # event during exploring which rewards player
     heroes[0].gold += quality
+
+def book(heroes, quality):
+    heroes[0].experience(quality)
 
 
 def generate_enemy(level):
@@ -150,7 +154,7 @@ def fight(heroes, enemy):
     # fighting
 
     for rounds in range(50):
-        choice = int(input())
+        choice = manager.choice()
         if choice == 1:  # escape attempt
             # basic roll for each fighter, if player side succeeds
             # if success return false
@@ -186,7 +190,7 @@ def walking(heroes, world):
         x += 1
 
     print()
-    choice = int(input())  # User input
+    choice = manager.choice()  # User input
 
     if choice > 1:  # enter location
         walk(heroes, world.locations[choice - 2])

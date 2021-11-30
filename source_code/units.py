@@ -141,7 +141,7 @@ def create_mercenary(power):
 class Hero(Unit):
     def __init__(self):
         super().__init__()
-        self.exp = 0
+        self.__exp = 0
         self.gold = 10
         knight = [3, 2, 1]
         rouge = [2, 3, 1]
@@ -171,13 +171,13 @@ class Hero(Unit):
             return False
 
     def experience(self, value):
-        self.exp += value * balance.weak
-        while self.exp > (self.level * balance.levelup_speed):
+        self.__exp += value * balance.weak
+        while self.__exp > (self.level * balance.levelup_speed):
             if (self.STR+self.AG+self.INT) == (len(balance.dices) * 3):
                 self.stat_changed()
                 return None  # max level
 
-            self.exp -= (self.level * balance.levelup_speed)
+            self.__exp -= (self.level * balance.levelup_speed)
             self.level += 1
 
             levelups = []
@@ -221,7 +221,7 @@ class Hero(Unit):
     def printing_all_stats(self):
         super().printing_all_stats()
         # we add hero specific values
-        print("Gold: %d Level: %d Exp: %d" % (self.gold, self.level, self.exp))
+        print("Gold: %d Level: %d Exp: %d" % (self.gold, self.level, self.__exp))
 
 
 

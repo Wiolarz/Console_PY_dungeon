@@ -8,6 +8,7 @@ from economy import roman_numbers
 
 class Quest:
     def __init__(self):
+        self.reward = 5
         self.days_to_complete = 0
         self.target_place = 0
 
@@ -82,6 +83,12 @@ class Quest:
 
         else:
             print("quest random_quest() -> switch_random")
+    def finished_quest(self, player):
+        if random.randint(0, 1) == 1:
+            player.gold += self.reward
+        else:
+            player.expirience(self.reward)
+        return Quest()
 
     def check_quest(self, player):
         if self.style == "boss" or self.style == "monsters":  # those are checked in locations
@@ -90,7 +97,7 @@ class Quest:
             if player.pay(self.quest_gold):
 
                 print("You have helped poor villagers")
-                balance.world.main_quest = Quest()
+                balance.world.main_quest = self.finished_quest(player)
         else:
             print("quest check_quest() -> wrong style")
 

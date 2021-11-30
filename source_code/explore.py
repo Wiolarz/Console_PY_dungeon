@@ -10,7 +10,7 @@ def walk(heroes, place):
     world = balance.world
     killed = 0
     for i in range(balance.events):
-        event = random.randint(0,  10)
+        event = random.randint(0, 10)
 
         if event <= place.chest_chance:
             print("You found a chest")
@@ -18,19 +18,19 @@ def walk(heroes, place):
         else:
             print("You fight")
             if fight(heroes, generate_enemy(place.level)):
+                loot(heroes, place)
                 killed += place.level
-               
+
         if world.main_quest.style == "boss" and world.main_quest.target_place == place.id:
             print("You encounter boss, his level: %d" % place.quest_level)
             boss = [units.Monster(place.quest_level)]
             if fight(heroes, boss):
-            
                 print("You won")
                 print(" quest: ")
                 world.main_quest = jobs.Quest()
                 world.main_quest.days_to_complete += 1
 
-        elif world.main_quest.style == "units.monsters" and\
+        elif world.main_quest.style == "units.monsters" and \
                 world.main_quest.target_place == place.id:
 
             print("you have defeated %d units.monsters" % killed)
@@ -40,7 +40,7 @@ def walk(heroes, place):
                 print("New quest: ")
                 world.main_quest = jobs.Quest()
                 world.main_quest.days_to_complete += 1
-            
+
 
 # walking functions
 
@@ -48,46 +48,56 @@ def chest(heroes, quality):
     # event during exploring which rewards player
     heroes[0].gold += quality
 
+
 def book(heroes, quality):
     heroes[0].experience(quality)
+
+
+def loot(heroes, place):
+    if random.randint(0, 1) == 1:
+        print("You looted a chest")
+        chest(heroes, place.chest_gold)
+    else:
+        print("You looted a book")
+        book(heroes, place.chest_gold)
 
 
 def generate_enemy(level):
     # event during exploring which challenges player
     enemy = []
-    
+
     if level == 1:
         enemy.append(units.Monster(1))
         return enemy
-    
+
     elif level == 2:
         if random.randint(0, 1) == 1:  # 50% chance
             enemy.append(units.Monster(2))
-        
+
         else:
             enemy.append(units.Monster(1))
             enemy.append(units.Monster(1))
-        
+
         return enemy
 
     x = random.randint(0, 3)  # * number of cases
-    
+
     if x == 0:
         # horde
         for i in range(level):
             enemy.append(units.Monster(1))
-        
+
     elif x == 1:
         # random
-        split = random.randint(0,  (level - 2)) + 2  # 2 -> level-1
+        split = random.randint(0, (level - 2)) + 2  # 2 -> level-1
         resource = level
         for i in range(split):
             next_level = (resource // split) + 1
             enemy.append(units.Monster(next_level))
             resource -= next_level
-        
+
         enemy.append(units.Monster(resource))
-        
+
     elif x == 2:
         # single boss
         enemy.append(units.Monster(level))
@@ -132,7 +142,7 @@ def turn_attacks(attacker, defender):
     for fighter in attacker:
         for action in range(fighter.attack_speed):
             # here could be a choice to perform different action instead
-            target = random.randint(0, len(defender)-1)
+            target = random.randint(0, len(defender) - 1)
 
             success = attack(fighter.strategy[action])
 
@@ -197,4 +207,3 @@ def walking(heroes, world):
         return True
 
     return False  # exit world map
-    

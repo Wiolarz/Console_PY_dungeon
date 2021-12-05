@@ -60,15 +60,15 @@ class Item:
         # strong_dices =
 
         for i in range(self.STR_req):
-            self.base_pool.append(balance.dices[random.randint(0,  (scope - 4)) + 3])  # magic number no sadge
+            self.base_pool.append(balance.dices[random.randint(0, (scope - 4)) + 3])  # magic number no sadge
 
         for i in range(self.AG_req):
-            self.base_pool.append(balance.dices[random.randint(0,  weak_dices)])
-            self.base_pool.append(balance.dices[random.randint(0,  normal_dices)])
+            self.base_pool.append(balance.dices[random.randint(0, weak_dices)])
+            self.base_pool.append(balance.dices[random.randint(0, normal_dices)])
 
         for i in range(self.INT_req):
         
-            self.base_pool.append(balance.dices[random.randint(0,  weak_dices)])
+            self.base_pool.append(balance.dices[random.randint(0, weak_dices)])
             x = random.randint(0, 2)
             
             if x == 0:

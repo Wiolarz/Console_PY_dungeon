@@ -2,7 +2,7 @@ import random
 
 import items
 import balance
-from source_code import manager
+from source_code.gameplay import manager
 
 
 def generate_items(days):

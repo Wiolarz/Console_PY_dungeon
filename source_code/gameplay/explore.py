@@ -3,7 +3,7 @@ import random
 import balance
 import units
 import jobs
-from source_code import manager
+from source_code.gameplay import manager
 
 
 def walk(heroes, place):

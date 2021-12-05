@@ -3,10 +3,14 @@ import economy
 import balance
 import explore
 import terrain
-from source_code import manager
+import manager
+#from source_code.gameplay import *
 
 
-def gameplay_loop(heroes):
+def gameplay_loop(heroes = None):
+    print("Start of gameplay_loop")
+    if heroes == None:
+        heroes = [units.Hero()]
     balance.world = terrain.Earth()
     balance.world.generate_location()
     balance.world.new_quest()
